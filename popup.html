@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text to Speech Reader</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    h1 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 8px;
+    }
+    
+    .button:last-child {
+      margin-bottom: 0;
+    }
+    
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .button-primary {
+      background: #4CAF50;
+      color: white;
+    }
+    
+    .button-primary:hover:not(:disabled) {
+      background: #45a049;
+    }
+    
+    .button-secondary {
+      background: #2196F3;
+      color: white;
+    }
+    
+    .button-secondary:hover:not(:disabled) {
+      background: #1976D2;
+    }
+    
+    .button-article {
+      background: #9C27B0;
+      color: white;
+    }
+    
+    .button-article:hover:not(:disabled) {
+      background: #7B1FA2;
+    }
+    
+    .button-danger {
+      background: #f44336;
+      color: white;
+    }
+    
+    .button-danger:hover {
+      background: #d32f2f;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    .article-indicator {
+      background: #f3e5f5;
+      border: 1px solid #ce93d8;
+      color: #7B1FA2;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    
+    .slider-container {
+      margin-bottom: 12px;
+    }
+    
+    .slider-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+    }
+    
+    .slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: #e0e0e0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+    }
+    
+    .status {
+      text-align: center;
+      padding: 8px;
+      font-size: 12px;
+      color: #666;
+      background: #e8f5e9;
+      border-radius: 4px;
+      margin-top: 8px;
+    }
+    
+    .status.speaking {
+      background: #fff3e0;
+      color: #e65100;
+    }
+  </style>
+</head>
+<body>
+  <h1>📖 Text to Speech Reader</h1>
+  
+  <div class="section">
+    <div class="section-title">Reading Options</div>
+    <div id="articleIndicator" class="article-indicator hidden">
+      📄 Article detected on this page
+    </div>
+    <button id="readSelected" class="button button-primary">Read Selected Text</button>
+    <button id="readArticle" class="button button-article hidden">Read Article</button>
+    <button id="readPage" class="button button-secondary">Read Entire Page</button>
+    <button id="stop" class="button button-danger">Stop Reading</button>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">Speech Settings</div>
+    
+    <div class="slider-container">
+      <div class="slider-label">
+        <span>Speed</span>
+        <span id="rateValue">1.0x</span>
+      </div>
+      <input type="range" id="rate" class="slider" min="0.5" max="2" step="0.1" value="1">
+    </div>
+    
+    <div class="slider-container">
+      <div class="slider-label">
+        <span>Pitch</span>
+        <span id="pitchValue">1.0</span>
+      </div>
+      <input type="range" id="pitch" class="slider" min="0.5" max="2" step="0.1" value="1">
+    </div>
+    
+    <div class="slider-container">
+      <div class="slider-label">
+        <span>Volume</span>
+        <span id="volumeValue">100%</span>
+      </div>
+      <input type="range" id="volume" class="slider" min="0" max="1" step="0.1" value="1">
+    </div>
+  </div>
+  
+  <div class="section">
+    <div class="section-title">Voice</div>
+    <select id="voiceSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ddd;">
+      <option value="">Loading voices...</option>
+    </select>
+  </div>
+  
+  <div id="status" class="status">Ready to read</div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
