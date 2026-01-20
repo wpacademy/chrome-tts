@@ -1,6 +1,6 @@
 # Text to Speech Reader
 
-A Chrome extension that reads articles and web page text aloud using natural-sounding voices.
+A Chrome extension that reads articles and web page text aloud using natural-sounding voices. This is a test extension built with Minimax 2.1 (free model). Feel free to extend this as per your requirements.
 
 ## Features
 
